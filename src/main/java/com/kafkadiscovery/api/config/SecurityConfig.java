@@ -1,4 +1,4 @@
-package com.kafkadiscovery.config;
+package com.kafkadiscovery.api.config;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
