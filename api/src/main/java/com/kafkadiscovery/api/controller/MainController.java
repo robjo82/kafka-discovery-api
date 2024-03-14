@@ -18,7 +18,7 @@ public class MainController {
     private final KafkaSender kafkaSender;
      
    @PostMapping("/data")
-   public ResponseEntity<String> uploadFile(@RequestParam String message) {
+   public ResponseEntity<String> uploadFile(@RequestParam("message") String message) {
        kafkaSender.send("topic1", message);
        return ResponseEntity.ok(message);
     }

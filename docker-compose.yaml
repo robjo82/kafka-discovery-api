@@ -48,6 +48,10 @@ services:
   api:
     depends_on:
     - kafka-init
-    build: .
+    - kafka
+    - postgres
+    build:
+      context: .
+      dockerfile: api/Dockerfile
     ports:
       - "8182:8182"
