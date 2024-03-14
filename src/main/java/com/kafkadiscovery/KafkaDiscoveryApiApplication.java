@@ -1,4 +1,4 @@
-package com.kafkadiscovery.api;
+package com.kafkadiscovery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,5 +9,7 @@ public class KafkaDiscoveryApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(KafkaDiscoveryApiApplication.class, args);
     }
+
+    
 
 }
