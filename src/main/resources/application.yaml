@@ -1,5 +1,13 @@
 server:
-  port: 8082
+  port: 8182
+
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
 logging:
-  level: 
+  level:
     web: DEBUG

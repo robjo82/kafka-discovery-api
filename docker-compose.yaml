@@ -1,19 +1,53 @@
 version: '3.1'
 
 services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093 # Changement ici
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093 # Changement ici
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: kafka_db
+
+  kafka-init:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - kafka
+    volumes:
+      - ./init-kafka.sh:/init-kafka.sh
+    command: bash -c "/init-kafka.sh"
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
 
   api:
+    depends_on:
+    - kafka-init
     build: .
     ports:
-      - "8082:8082"
-
-  mirth-connect:
-    image: nextgenhealthcare/connect:3.9.1
-    ports:
-      - "8081:8080" # Mirth Administrator
-      - "8444:8443" # Port HTTPS (si vous utilisez SSL)
-    volumes:
-      - ./mirth-data:/opt/mirth-connect/appdata # Persister les données de configuration et les logs
-      - ./hl7-files:/mnt/hl7_files # Dossier pour les fichiers HL7 entrants
-      - ./output-files:/mnt/output_files # Dossier pour les fichiers JSON sortants (facultatif)
-    restart: unless-stopped
+      - "8182:8182"
