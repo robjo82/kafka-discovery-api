@@ -54,4 +54,15 @@ services:
       context: .
       dockerfile: api/Dockerfile
     ports:
-      - "8182:8182"
+      - "8082:8082"
+
+  mirth-connect:
+    image: nextgenhealthcare/connect:3.9.1
+    ports:
+      - "8081:8080"
+      - "8444:8443"
+    volumes:
+      - ./mirth-data:/opt/mirth-connect/appdata
+      - ./hl7-files:/mnt/hl7_files
+      - ./output-files:/mnt/output_files
+    restart: unless-stopped
