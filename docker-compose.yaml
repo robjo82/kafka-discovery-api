@@ -57,6 +57,17 @@ services:
       dockerfile: api/Dockerfile
     ports:
       - "8082:8082"
+    
+  user:
+    depends_on:
+    - kafka-init
+    - kafka
+    - postgres
+    build:
+      context: .
+      dockerfile: user/Dockerfile
+    ports: 
+      - "8083:8083"
 
   mirth-connect:
     image: nextgenhealthcare/connect:3.9.1
