@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -22,12 +21,13 @@ import java.io.IOException;
 public class MainController {
 
     private final KafkaSender kafkaSender;
-     
+
    @PostMapping("/data")
-   public ResponseEntity<String> uploadFile(@RequestBody MultipartFile xmlData) {
+   public ResponseEntity<String> uploadFile(@RequestBody String xmlData) {
+       log.info("Received XML data: " + xmlData);
         try {
             XmlMapper xmlMapper = new XmlMapper();
-            JsonNode node = xmlMapper.readTree(xmlData.getInputStream());
+            JsonNode node = xmlMapper.readTree(xmlData);
 
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(node);
