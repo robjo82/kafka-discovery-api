@@ -68,6 +68,8 @@ services:
       dockerfile: user/Dockerfile
     ports: 
       - "8083:8083"
+    stdin_open: true
+    tty: true 
 
   mirth-connect:
     image: nextgenhealthcare/connect:3.9.1

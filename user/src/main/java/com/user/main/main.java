@@ -8,7 +8,7 @@ public class main {
     public static void main(String[] args) {
         // Producteur producer = new Producteur("kafka:9092", "user_commands");
         Scanner scanner = new Scanner(System.in);
-
+        
         while (true) {
             afficherMenu();
             String input = scanner.nextLine();
