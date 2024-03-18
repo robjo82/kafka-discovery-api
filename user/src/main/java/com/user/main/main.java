@@ -6,7 +6,7 @@ import com.user.producteur.Producteur;
 public class main {
 
     public static void main(String[] args) {
-        // Producteur producer = new Producteur("kafka:9092", "user_commands");
+        Producteur producer = new Producteur("kafka:9092", "user_commands");
         Scanner scanner = new Scanner(System.in);
         
         while (true) {
@@ -51,7 +51,7 @@ public class main {
         }
 
         scanner.close();
-        // producer.close();
+        producer.close();
         System.out.println("Producteur fermé et interface de ligne de commande fermée.");
     }
 
