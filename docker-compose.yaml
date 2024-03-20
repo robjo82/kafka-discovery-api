@@ -19,8 +19,8 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093 # Changement ici
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093 # Changement ici
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
@@ -34,6 +34,8 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: kafka_db
+    volumes:
+      - ./postgres-init:/docker-entrypoint-initdb.d
 
   kafka-init:
     image: confluentinc/cp-kafka:latest
@@ -47,9 +49,9 @@ services:
 
   api:
     depends_on:
-    - kafka-init
-    - kafka
-    - postgres
+      - kafka-init
+      - kafka
+      - postgres
     build:
       context: .
       dockerfile: api/Dockerfile
@@ -64,3 +66,19 @@ services:
     volumes:
       - ./hl7-files:/mnt/hl7_files
     restart: unless-stopped
+
+  cs1:
+    depends_on:
+      - kafka-init
+      - kafka
+      - postgres
+    build:
+      context: .
+      dockerfile: cs1/Dockerfile
+    environment:
+      KAFKA_BROKER: kafka:9092
+      DB_URL: jdbc:postgresql://postgres:5432/kafka_db
+      DB_USER: user
+      DB_PASSWORD: password
+    command: [ "./wait-for-postgres.sh", "postgres", "5432", "--", "java", "-jar", "/app/kafka-to-postgres.jar" ]
+
