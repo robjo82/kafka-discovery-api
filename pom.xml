@@ -28,6 +28,7 @@
     <modules>
         <module>api</module>
         <module>cs1</module>
+        <module>user</module>
     </modules>
 
     <dependencyManagement>

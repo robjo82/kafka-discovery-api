@@ -1,0 +1,3 @@
+-docker-ps et trouver le contenaire : kafka-discovery-api-user 
+-faire  docker attach d1b552bb9c87 (c'est l'id du contenaire)
+-ca marche
