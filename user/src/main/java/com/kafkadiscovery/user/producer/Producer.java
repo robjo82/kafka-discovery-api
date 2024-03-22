@@ -1,4 +1,4 @@
-package com.user.producteur;
+package com.kafkadiscovery.user.producer;
 
 import java.util.Properties;
 
@@ -7,11 +7,11 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-public class Producteur {
+public class Producer {
     private final KafkaProducer<String, String> producer;
     private final String topic;
 
-    public Producteur(String servers, String topic) {
+    public Producer(String servers, String topic) {
         Properties properties = new Properties();
         properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());

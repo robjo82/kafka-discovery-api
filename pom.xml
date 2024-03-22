@@ -12,6 +12,8 @@
 
     <properties>
         <java.version>21</java.version>
+        <maven.jar.plugin.version>3.3.0</maven.jar.plugin.version>
+        <maven.shader.plugin.version>3.2.4</maven.shader.plugin.version>
         <spring.boot.version>3.2.3</spring.boot.version>
         <spring.kafka.version>3.1.2</spring.kafka.version>
         <kafka.clients.version>3.7.0</kafka.clients.version>
@@ -23,12 +25,15 @@
         <log4j.version>2.23.1</log4j.version>
         <slf4j.version>2.0.12</slf4j.version>
         <logback.version>1.5.3</logback.version>
+        <javafx.version>22</javafx.version>
     </properties>
 
     <modules>
         <module>api</module>
         <module>cs1</module>
+        <module>cs2</module>
         <module>user</module>
+        <module>user-app</module>
     </modules>
 
     <dependencyManagement>

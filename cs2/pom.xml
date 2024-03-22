@@ -10,12 +10,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>cs1</artifactId>
+    <artifactId>cs2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>kafka-discovery-cs1</name>
-    <description>kafka-discovery-cs1</description>
+    <name>kafka-discovery-cs2</name>
+    <description>kafka-discovery-cs2</description>
 
     <dependencies>
         <!-- Kafka -->
@@ -62,7 +62,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.kafkadiscovery.cs1.KafkaToPostgresConsumer</mainClass>
+                            <mainClass>com.kafkadiscovery.cs2.KafkaToPostgresConsumer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -80,7 +80,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.kafkadiscovery.cs1.KafkaToPostgresConsumer</mainClass>
+                                    <mainClass>com.kafkadiscovery.cs2.KafkaToPostgresConsumer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
